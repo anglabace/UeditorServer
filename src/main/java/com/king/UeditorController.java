@@ -18,7 +18,7 @@ public class UeditorController {
     /**
      * 获取 ueditor 的配置
      */
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public void getConfig(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String url = UeditorController.class.getResource("/ueditor-config.json").getPath();
         Path path = Paths.get(url);
@@ -41,7 +41,7 @@ public class UeditorController {
     /**
      * ueditor 上传图片
      */
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST)
     public String upload(@RequestParam("upfile") MultipartFile multipartFile) throws IOException {
 
 //        Map<String, String> resultMap = new HashMap<>();
