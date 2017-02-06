@@ -21,7 +21,7 @@ public class UeditorController {
     @RequestMapping(method = RequestMethod.GET)
     public void getConfig(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String url = UeditorController.class.getResource("/ueditor-config.json").getPath();
-        Path path = Paths.get(url);
+        Path path = Paths.get(url.substring(1, url.length()));
         List<String> lines = Files.readAllLines(path);
         StringBuilder sb = new StringBuilder();
         lines.forEach(line -> sb.append(line));
