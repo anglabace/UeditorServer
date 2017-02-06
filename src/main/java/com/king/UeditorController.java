@@ -57,4 +57,15 @@ public class UeditorController {
         return str;
     }
 
+
+    @RequestMapping(method = RequestMethod.OPTIONS)
+    public void fun(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("#####################################");
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Headers", "X-Requested-With, accept, origin, content-type");
+        response.addHeader("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+        response.addHeader("X-Powered-By", "3.2.1");
+        response.addHeader("Content-Type", "application/json;charset=utf-8");
+    }
+
 }
