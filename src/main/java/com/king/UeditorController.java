@@ -9,18 +9,26 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * ueditor 相关控制层
+ * 2017.02.07
+ */
 @RestController
 @RequestMapping(path = "/ueditor")
 public class UeditorController {
 
     /**
      * 获取 ueditor 的配置
+     * 其实就是读取 ueditor-config.json 文件中的内容并以字符串的形式返回
      */
     @RequestMapping(method = RequestMethod.GET)
     public void getConfig(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setCharacterEncoding("GBK");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        response.setCharacterEncoding("utf-8");
         String url = UeditorController.class.getResource("/ueditor-config.json").getPath();
         Path path = Paths.get(url);
         List<String> lines = Files.readAllLines(path);
@@ -43,30 +51,29 @@ public class UeditorController {
      * ueditor 上传图片
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String upload(@RequestParam("upfile") MultipartFile multipartFile) throws IOException {
+    public Map<String, String> upload(@RequestParam("upfile") MultipartFile multipartFile, HttpServletResponse response) throws IOException {
 
-//        Map<String, String> resultMap = new HashMap<>();
-//        resultMap.put("state", "SUCCESS");
-//        resultMap.put("original", multipartFile.getOriginalFilename());
-//        resultMap.put("size", "1111111");
-//        resultMap.put("title", "123.jpg");
-//        resultMap.put("type", ".jpg");
-//        resultMap.put("url", "/123.jpg");
-//        return resultMap;
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Headers", "x_requested_with");
+        response.setHeader("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
 
-        String str = "{\"state\": \"SUCCESS\",\"original\": \"8235345_8235345_1309860288554.jpg\",\"size\": \"731183\",\"title\": \"1486366738678046082.jpg\",\"type\": \".jpg\",\"url\": \"/ueditor/jsp/upload/image/20170206/1486366738678046082.jpg\"}";
-        return str;
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("state", "SUCCESS");
+        resultMap.put("original", multipartFile.getOriginalFilename());
+        resultMap.put("size", "1111111");
+        resultMap.put("title", "123.jpg");
+        resultMap.put("type", ".jpg");
+        resultMap.put("url", "/123.jpg");
+        return resultMap;
     }
 
 
     @RequestMapping(method = RequestMethod.OPTIONS)
     public void fun(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("#####################################");
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Headers", "X-Requested-With, accept, origin, content-type");
-        response.addHeader("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-        response.addHeader("X-Powered-By", "3.2.1");
-        response.addHeader("Content-Type", "application/json;charset=utf-8");
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Headers", "x_requested_with");
+        response.setHeader("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
     }
 
 }
